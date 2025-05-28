@@ -17,7 +17,7 @@ echo -e "\nAverage number of goals in all games from the winning teams rounded t
 echo "$($PSQL "SELECT ROUND(AVG(winner_goals),2) FROM games")"
 
 echo -e "\nAverage number of goals in all games from both teams:"
-echo "$($PSQL "SELECT AVG((winner_goals + opponent_goals)/2) FROM games")"
+echo "$($PSQL "SELECT AVG(winner_goals + opponent_goals) FROM games")"
 
 echo -e "\nMost goals scored in a single game by one team:"
 echo "$($PSQL "SELECT MAX(winner_goals) FROM games")"
@@ -35,7 +35,7 @@ echo -e "\nList of unique winning team names in the whole data set:"
 echo "$($PSQL "SELECT DISTINCT(name) FROM teams INNER JOIN games ON teams.team_id = games.winner_id")"
 
 echo -e "\nYear and team name of all the champions:"
-echo "$($PSQL "SELECT name,year FROM teams INNER JOIN games ON teams.team_id = games.winner_id WHERE round='Final'")"
+echo "$($PSQL "SELECT year,name FROM teams INNER JOIN games ON teams.team_id = games.winner_id WHERE round='Final'")"
 
 echo -e "\nList of teams that start with 'Co':"
 echo "$($PSQL "SELECT name FROM teams WHERE name LIKE 'Co%'")"
